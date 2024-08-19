@@ -1,0 +1,137 @@
+{%load static%}
+<!doctype html>
+<html class="no-js h-100" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Dashboard TunisianTraventures</title>
+    <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" id="main-stylesheet" data-version="1.1.0" href="{% static 'styles/shards-dashboards.1.1.0.min.css'%}">
+    <link rel="stylesheet" href="styles/extras.1.1.0.min.css">
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+  </head>
+  <body class="h-100">
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Main Sidebar -->
+        {%include 'admin/sidebar.html' %}
+        <!-- End Main Sidebar -->
+        <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+
+          <!-- / .main-navbar -->
+          <div class="main-content-container container-fluid px-4">
+            <!-- Page Header -->
+            <div class="page-header row no-gutters py-4">
+              <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                <span class="text-uppercase page-subtitle">Users</span>
+                <h3 class="page-title">Reservation List</h3>
+              </div>
+            </div>
+            <!-- End Page Header -->
+            <!-- Default Light Table -->
+            <div class="row">
+              <div class="col">
+                <div class="card card-small mb-4">
+                  <div class="card-header border-bottom">
+                    <h6 class="m-0">Total Reservation : {{AllReservations.count}}</h6>
+                  </div>
+                  <div class="card-body p-0 pb-3 text-center">
+                    <table class="table mb-0">
+                      <thead class="bg-light">
+                        <tr>
+                          <th scope="col" class="border-0">#</th>
+                          <th scope="col" class="border-0">Full Name</th>
+                          <th scope="col" class="border-0">Phone</th>
+                          <th scope="col" class="border-0">Type</th>
+                          <th scope="col" class="border-0">Type Name</th>
+                          <th scope="col" class="border-0">Region</th>
+                          <th scope="col" class="border-0">Reserved To </th>
+                          <th scope="col" class="border-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                              <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
+                            </svg>
+                            </th>
+                            <th scope="col" class="border-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-arms-up" viewBox="0 0 16 16">
+                              <path d="M8 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+                              <path d="m5.93 6.704-.846 8.451a.768.768 0 0 0 1.523.203l.81-4.865a.59.59 0 0 1 1.165 0l.81 4.865a.768.768 0 0 0 1.523-.203l-.845-8.451A1.5 1.5 0 0 1 10.5 5.5L13 2.284a.796.796 0 0 0-1.239-.998L9.634 3.84a.7.7 0 0 1-.33.235c-.23.074-.665.176-1.304.176-.64 0-1.074-.102-1.305-.176a.7.7 0 0 1-.329-.235L4.239 1.286a.796.796 0 0 0-1.24.998l2.5 3.216c.317.316.475.758.43 1.204Z"/>
+                            </svg>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for res in AllReservations %}
+                        <tr>
+                          <td>{{res.id}}</td>
+                          <td>
+                            {{res.name}} {{res.surname}}
+                          </td>
+                          <td><a href="tel:{{res.phone}}">{{res.phone}}</a></td>
+                          <td>{%if res.type == 'hotel'%}Hotel{%else%}Café & Resto {%endif%}</td>
+                          <td>
+                            {% if res.type == "hotel" %}
+                            {% for hotel in Hotels %}
+                                {% if res.type_id == hotel.id %}
+                                  {{hotel.name}} 
+                                {% endif %}
+                            {% endfor %}
+                            {% else %}
+                            {% for caferesto in Caferesto %}
+                                {% if res.type_id == caferesto.id %}
+                                    {{caferesto.name}} 
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+
+                          </td>
+                          <td>                           
+                            {% if res.type == "hotel" %}
+                            {% for hotel in Hotels %}
+                                {% if res.type_id == hotel.id %}
+                                   <a href="/region?name={{hotel.region}}/" target="_blank">{{hotel.region}}</a>
+                                {% endif %}
+                            {% endfor %}
+                            {% else %}
+                            {% for caferesto in Caferesto %}
+                                {% if res.type_id == caferesto.id %}
+                                    {{caferesto.region}} 
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}</td>
+                          <td>{{res.date|date:"d/m/Y"}}</td>
+                          <td>{{res.adult}}</td>
+                          <td>{{res.children}}</td>
+                        </tr>
+                        
+                        {%endfor%}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+
+        </main>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script src="https://unpkg.com/shards-ui@latest/dist/js/shards.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sharrre/2.0.1/jquery.sharrre.min.js"></script>
+    <script src="scripts/extras.1.1.0.min.js"></script>
+    <script src="scripts/shards-dashboards.1.1.0.min.js"></script>
+  </body>
+</html>

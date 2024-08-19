@@ -1,0 +1,202 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation</title>
+    <link rel="shortcut icon" type="x-icon" href="3.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Odor Mean Chey", sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url({% static 'A-la-decouverte-du-Sud-tunisien-01.jpg'%}) no-repeat center/cover;
+        }
+
+        .container {
+            height:90%;
+            max-width: 500px;
+            background-color: transparent;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(100px);
+        }
+
+        .container h2 {
+            text-align: center;
+            font-size: 25px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .input-box {
+            position: relative;
+            margin-bottom: 30px;
+            
+        }
+
+        .input-box input {
+            width: 100%;
+            height: 40px;
+            padding: 10px;
+            border: none;
+            border-bottom: 2px solid #ffffff;
+            outline: none;
+            font-size: 16px;
+            background-color: transparent;
+            
+            
+        }
+
+        .input-box label {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: #fff;
+            pointer-events: none;
+            transition: 0.3s ease;
+        }
+
+        .input-box input:focus ~ label,
+        .input-box input:valid ~ label {
+            top: -18px;
+            font-size: 14px;
+            color: #ffffff;
+        }
+
+        .btn {
+            width: 100%;
+            height: 45px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+            background-color: deeppink;
+            border-radius: 25px;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #ff1493;
+        }
+        .header{
+            top: 0;
+            left: 0;
+            z-index: 100;
+            position: absolute;
+            
+
+
+        }
+        .navbar img{
+            position:absolute;
+            top: -20px;
+            left: 0;
+            width: 170px;
+            
+            
+        }
+        
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <img src="{% static 'WhatsApp_Image_2024-03-23_at_04.05.23-removebg-preview.png'%}"> 
+        </nav>
+    </header>
+    <div class="container">
+        <h2>Reservation Form</h2>
+        <form method="POST" name="reservation" >
+            {% csrf_token %}
+            <div class="input-box">
+                <input type="text" name="name"  required>
+                <label>Name</label>
+            </div>
+            <div class="input-box">
+                <input type="text" name="surname" required>
+                <label>Surname</label>
+            </div>
+            <div class="input-box">
+                <input type="email" name="email" required>
+                <label>Email</label>
+            </div>
+            <div class="input-box">
+                <input type="tel" name="phone" required>
+                <label>Phone Number</label>
+            </div>
+            <div class="input-box" style="top: 10px;" >
+                <input type="date" name="reservation_date" id="datepicker" onchange="validateDate()" required >
+                <label style="top: 0;";>Reservation Date</label>
+            </div>
+            <div class="input-box" style="top: 10px;">
+                <input type="number" name="number_of_adult" id="adltnumb" onchange="validateNumberAdult()" required>
+                <label>Number of adults</label>
+            </div>
+            <div class="input-box" style="top: 10px;">
+                <input type="number" name="number_of_children" id="chldrnumb" onchange="validateNumberchldr()" required>
+                <label>Number of children</label>
+            </div>
+            <button type="submit" class="btn" >Reservé</button>
+        </form>
+    </div>
+
+    
+    
+    <script>
+        function validateDate() {
+            const datePicker = document.getElementById('datepicker');
+            const selectedDate = new Date(datePicker.value);
+            const today = new Date();
+    
+            if (selectedDate < today) {
+                alert("Please select a date that is today or in the future.");
+                datePicker.value = ''; 
+            }
+        }
+    </script>
+   <script>
+    function validateNumberAdult() {
+        const numberInput = document.getElementById('adltnumb');
+        const selectedNumber = Number(numberInput.value);
+
+        if (selectedNumber <= 0 || isNaN(selectedNumber)) {
+            alert("Please enter a valid number of adults (minimum 1).");
+            numberInput.value = ''; 
+        }
+    }
+    </script>
+    <script>
+        function validateNumberchldr() {
+            const numberInput = document.getElementById('chldrnumb');
+            const selectedNumber = Number(numberInput.value);
+    
+            if (selectedNumber < 0 || isNaN(selectedNumber)) {
+                alert("Please enter a valid number of children.");
+                numberInput.value = ''; 
+            }
+        }
+    </script>
+    
+
+    
+    
+</body>
+</html>

@@ -1,0 +1,250 @@
+{% load static %}
+<!doctype html>
+<html class="no-js h-100" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Profile</title>
+    <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" id="main-stylesheet" data-version="1.1.0" href="{% static 'styles/shards-dashboards.1.1.0.min.css'%}">
+    <link rel="stylesheet" href="{% static 'styles/extras.1.1.0.min.css'%}">
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <style>
+                .header{
+                top: 0;
+                left: 0;
+                z-index: 100;
+                position: absolute;
+                 
+
+
+            }
+            .navbar {
+                background-color: #174373; 
+                height: 50px;
+                
+            }
+
+            .navbar-brand img {
+                width: 100px; 
+                height: auto; 
+                margin-right: 10px; 
+                padding: 0;
+            }
+            
+            
+            .navbar-nav {
+                margin-left: 900px; 
+                margin-right: 70px;
+                font-size: 20px;
+            } 
+            
+            .navbar-nav .nav-link {
+                color: #ffffff; 
+                transition: color 0.3s ease, transform 0.3s ease;
+            }
+            
+
+
+    </style>
+  </head>
+  <body class="h-100">
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="container-fluid">
+              <a class="navbar-brand" href="#">
+                  <img src="{% static 'WhatsApp_Image_2024-03-23_at_04.05.23-removebg-preview.png'%}" alt="Logo">
+              </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+
+              </div>
+          </div>
+      </nav>
+      
+  </header> 
+    <div class>
+      <div class="row">
+        <!-- Main Sidebar -->
+
+        <!-- End Main Sidebar -->
+        <main class="main-content col-lg-12 col-md-12 col-sm-12 p-0 offset-lg-12 offset-md-12">
+          
+          <!-- / .main-navbar -->
+          {% for message in messages %}
+          <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <i class="fa fa-check mx-2"></i>{{ message }}
+          </div>
+          {% endfor %}
+          <div class="main-content-container container-fluid px-4">
+            <!-- Page Header -->
+            <div class="page-header row no-gutters py-4">
+              <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                <span class="text-uppercase page-subtitle">Profile</span>
+                <h3 class="page-title">Profile</h3>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="card card-small mb-4 pt-3">
+                  <div class="card-header border-bottom text-center">
+                    <div class="mb-3 mx-auto">
+                      <img class="rounded-circle" src="{% static 'images/avatars/3.jpg'%}" alt="User Avatar" width="110"> </div>
+                    <h4 class="mb-0">{{ request.user.first_name }} {{ request.user.last_name }}</h4>
+
+                  </div>
+                  <ul class="list-group list-group-flush">
+
+                    <li class="list-group-item p-4">
+                      <strong class="text-muted d-block mb-2">Username: {{ request.user.username }}</strong>
+                      <strong class="text-muted d-block mb-2">creation date : {{ request.user.date_joined|date:'d/m/Y à H:i' }}</strong>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-lg-8">
+                <div class="card card-small mb-4">
+                  <div class="card-header border-bottom">
+                    <h6 class="m-0"> compte details</h6>
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item p-3">
+                      <div class="row">
+                        <div class="col">
+                          <form method="POST" name="UpdateUser">
+                            {% csrf_token %}
+                            <div class="form-row">
+                              <div class="form-group col-md-6">
+                                <label for="feFirstName">surname</label>
+                                <input type="text" class="form-control" id="feFirstName" name="first_name" placeholder="First Name" value="{{ request.user.first_name }}" required> </div>
+                              <div class="form-group col-md-6">
+                                <label for="feLastName">name</label>
+                                <input type="text" class="form-control" id="feLastName" name="last_name" placeholder="Last Name" value="{{ request.user.last_name }}" required> </div>
+                            </div>
+                            <div class="form-row">
+                              <div class="form-group col-md-6">
+                                <label for="feEmailAddress">Email</label>
+                                <input type="email" class="form-control" id="feEmailAddress" name="email" placeholder="Email" value="{{ request.user.email }}" required> </div>
+                              <div class="form-group col-md-6">
+                                <label for="fePassword">password</label>
+                                <input type="password" class="form-control" id="fePassword" name="password" placeholder="Password" required> </div>
+                            </div>
+
+
+                            <button type="submit" class="btn btn-accent">Update</button>
+                          </form>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <div class="card card-small mb-4">
+                  <div class="card-header border-bottom">
+                    <h6 class="m-0">My reservations : {{AllReservations.count}}</h6>                    
+                  </div>
+                  <div class="card-body p-0 pb-3 text-center">
+                    <table class="table mb-0">
+                      <thead class="bg-light">
+                        <tr>
+                          <th scope="col" class="border-0">Id</th>
+                          <th scope="col" class="border-0">Type</th>
+                          <th scope="col" class="border-0">Type name</th>
+                          <th scope="col" class="border-0">Region</th>
+                          <th scope="col" class="border-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                              <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
+                            </svg>
+                            </th>
+                            <th scope="col" class="border-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-arms-up" viewBox="0 0 16 16">
+                              <path d="M8 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+                              <path d="m5.93 6.704-.846 8.451a.768.768 0 0 0 1.523.203l.81-4.865a.59.59 0 0 1 1.165 0l.81 4.865a.768.768 0 0 0 1.523-.203l-.845-8.451A1.5 1.5 0 0 1 10.5 5.5L13 2.284a.796.796 0 0 0-1.239-.998L9.634 3.84a.7.7 0 0 1-.33.235c-.23.074-.665.176-1.304.176-.64 0-1.074-.102-1.305-.176a.7.7 0 0 1-.329-.235L4.239 1.286a.796.796 0 0 0-1.24.998l2.5 3.216c.317.316.475.758.43 1.204Z"/>
+                            </svg>
+                          </th>
+                          <th scope="col" class="border-0">Reserved for</th>
+                          <th scope="col" class="border-0">Annuler</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for res in AllReservations %}
+                        <tr>
+                          <td>{{res.id}}</td>
+                          <td>{{res.type}}</td>
+                          <td>
+                          {% if res.type == "hotel" %}
+                              {% for hotel in Hotels %}
+                                  {% if res.type_id == hotel.id %}
+                                      <p>{{hotel.name}}</p>
+                                  {% endif %}
+                              {% endfor %}
+                          {% else %}
+                            {% for caferesto in Caferesto %}
+                                {% if res.type_id == caferesto.id %}
+                                    <p>{{caferesto.name}}</p>
+                                {% endif %}
+                            {% endfor %}
+                          {% endif %}
+                          </td>
+                          <td>
+                            {% if res.type == "hotel" %}
+                            {% for hotel in Hotels %}
+                                {% if res.type_id == hotel.id %}
+                                   <a href="/region?name={{hotel.region}}/" target="_blank">{{hotel.region}}</a>
+                                {% endif %}
+                            {% endfor %}
+                            {% else %}
+                            {% for caferesto in Caferesto %}
+                                {% if res.type_id == caferesto.id %}
+                                <a href="/region?name={{caferesto.region}}/" target="_blank">{{caferesto.region}} </a>
+                                {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                          </td>
+                          <td>{{ res.adult }}</td>
+                          <td>{{ res.children }}</td>
+                          <td>{{res.date|date:"d/m/Y"}}</td>
+                          <td>
+                            <a href="/profile?delete={{res.id}}">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                              </svg>
+                            </a>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script src="https://unpkg.com/shards-ui@latest/dist/js/shards.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sharrre/2.0.1/jquery.sharrre.min.js"></script>
+    <script src="{% static 'scripts/extras.1.1.0.min.js'%}"></script>
+    <script src="{% static 'scripts/shards-dashboards.1.1.0.min.js'%}"></script>
+  </body>
+</html>
